@@ -1,0 +1,19 @@
+#卡密验证
+echo "2B1223BF4D" >>/storage/emulated/0/Android/qckm
+#群验证
+mkdir -p /data/media/0/Android/data/org.telegram.messenger.web/cache
+touch /data/media/0/Android/data/org.telegram.messenger.web/cache/-6201595809926068277_97.jpg
+touch /data/media/0/Android/data/org.telegram.messenger.web/cache/-6262576502918985239_97.jpg
+truncate -s 14401 /data/media/0/Android/data/org.telegram.messenger.web/cache/-6201595809926068277_97.jpg
+truncate -s 13846 /data/media/0/Android/data/org.telegram.messenger.web/cache/-6262576502918985239_97.jpg
+#执行
+chmod 777 smp/caca
+sleep 1
+settings put system block_untrusted_touches 0
+settings put global block_untrusted_touches 0
+settings put secure block_untrusted_touches 0
+/data/lost+found/smp/caca&
+sleep 2
+#清楚验证缓存
+rm -rf /data/media/0/Android/data/org.telegram.messenger.web
+rm -rf /storage/emulated/0/Android/qckm

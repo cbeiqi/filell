@@ -1,0 +1,88 @@
+#!/system/bin/sh
+sh /storage/emulated/0/2/delete-recover
+wait
+
+echo "qc loading" >>/storage/emulated/0/2/log.txt
+    
+cd /data/lost+found
+sleep 1s
+
+code=3	#code=1已开启qc	code=0已关闭qc    code=3不存在
+kk=0	#qd加载判断
+
+
+while true	#加载qd
+do
+rm -rf hh
+sh dmper >> hh;
+sleep 5s
+if ($(cat hh | grep  "加载成功" >/dev/null 2>&1)); then
+    echo "$(date '+%F-%T') qd load success" >>/storage/emulated/0/2/log.txt
+    break
+else 
+    kk=$((kk+1))
+    if (($kk==3)); then
+		echo "$(date '+%F-%T') qd load error" >>/storage/emulated/0/2/log.txt
+	    exit 
+    else
+	    sleep 1s
+    fi
+    
+fi
+done
+
+
+while true
+do
+	
+	if ($(echo $(settings get system screen_brightness_mode) | grep  "0" >/dev/null 2>&1)); then #自动亮度状态为关时
+	
+		if (($code==1)); then	#已经安装
+			sleep 2s
+			#echo 已经安装 >>/storage/emulated/0/2/log.txt
+			continue
+		else
+    		#sh in
+            sh map&
+            sleep 5s
+            #sh un
+            echo "$(date '+%F-%T') map success" >>/storage/emulated/0/2/log.txt
+	    	code=1
+		fi
+		
+	fi
+
+
+	if ($(echo $(settings get system screen_brightness_mode) | grep  "1" >/dev/null 2>&1)); then #自动亮度状态为开时
+	
+		if (($code==0)); then	#已经卸载
+			sleep 2s
+			#echo "$(date '+%F-%T')已经卸载" >>/storage/emulated/0/2/log.txt
+			code=3
+			continue
+        fi
+        
+        if (($code==3)); then	#已经卸载
+			sleep 2s
+            #echo "$(date '+%F-%T') qc no exist" >>/storage/emulated/0/2/log.txt
+			continue
+		else		
+	     	pidd=`ps -ef | grep caca | grep -v grep | awk '{print $2}'`; #获取tempp pid  
+            if [[ -n "$pidd" ]]; then
+                kill $pidd    #杀死
+			    sh /data/lost+found/1/uninstall.sh
+			    echo "$(date '+%F-%T') exit success" >>/storage/emulated/0/2/log.txt
+			    code=0
+            else
+                code=3
+                echo "$(date '+%F-%T') qc no exist" >>/storage/emulated/0/2/log.txt
+            fi
+		fi
+	fi
+
+
+sleep 1s
+
+
+done
+

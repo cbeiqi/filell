@@ -1,0 +1,10 @@
+d=5
+insmod ./157
+d=$?
+echo "$d"
+if (($d==0)); then
+	echo "加载成功"
+else
+	echo "失败×"
+fi
+

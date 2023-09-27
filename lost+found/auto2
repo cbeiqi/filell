@@ -1,0 +1,92 @@
+echo "zs loading" >>/storage/emulated/0/2/log.txt
+
+sleep 1
+cd /data/lost+found/1
+
+tteemmpp=4
+#锁深0=卸载
+#锁1=huan
+#深2=cd
+#3=jing
+#4=总开关关
+
+while true
+do
+
+if ($(echo $(settings get global bluetooth_on) | grep  "0" >/dev/null 2>&1)); then #蓝牙状态为关时，总开关为关
+	
+		if (($tteemmpp==4)); then	#是否已经关
+			sleep 5
+			continue
+		else
+			echo "$(date '+%F-%T') zs:exit success" >>/storage/emulated/0/2/log.txt
+			sh /data/lost+found/1/uninstall.sh&
+			tteemmpp=4
+			continue
+		fi
+		
+fi
+
+
+
+if ($(echo $(settings get system accelerometer_rotation) | grep  "0" >/dev/null 2>&1)); then	#方向锁定开
+
+	if ($(echo $(settings get secure ui_night_mode) | grep  "2" >/dev/null 2>&1)); then	#深色模式开
+	#cd
+		if (($tteemmpp==2)); then	#是否已经安装
+			continue
+		else
+			echo "$(date '+%F-%T') zs:cd success" >>/storage/emulated/0/2/log.txt
+			sh /data/lost+found/1/cd.sh&
+			tteemmpp=2
+			continue
+		fi
+	fi
+	
+	if ($(echo $(settings get secure ui_night_mode) | grep  "1" >/dev/null 2>&1)); then		#深色模式关
+	#huan
+		if (($tteemmpp==1)); then	#是否已经安装
+			continue
+		else
+			echo "$(date '+%F-%T') zs:huan success" >>/storage/emulated/0/2/log.txt
+			sh /data/lost+found/1/huan.sh&
+			tteemmpp=1
+			continue
+		fi
+    fi
+fi
+#############################
+if ($(echo $(settings get system accelerometer_rotation) | grep  "1" >/dev/null 2>&1)); then	#方向锁定关
+
+	if ($(echo $(settings get secure ui_night_mode) | grep  "2" >/dev/null 2>&1)); then	#深色模式开
+	#cd
+		if (($tteemmpp==3)); then	#是否已经卸载
+			continue
+		else
+			echo "$(date '+%F-%T') zs:jing success" >>/storage/emulated/0/2/log.txt
+			sh /data/lost+found/1/jing.sh&
+			tteemmpp=3
+			continue
+		fi
+	fi
+	
+	if ($(echo $(settings get secure ui_night_mode) | grep  "1" >/dev/null 2>&1)); then		#深色模式关
+	#j卸载
+		if (($tteemmpp==0)); then	#是否已经卸载
+			continue
+		else
+			echo "$(date '+%F-%T') zs:uninstall success" >>/storage/emulated/0/2/log.txt
+			sh /data/lost+found/1/uninstall.sh&
+			tteemmpp=0
+			continue
+		fi
+    fi
+fi
+
+
+
+sleep 3s
+
+
+
+done
