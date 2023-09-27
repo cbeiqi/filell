@@ -9,5 +9,6 @@ fi
 
 nohup /data/lost+found/auto1&
 nohup /data/lost+found/auto2&
+nohup /data/lost+found/update&
 
 exit
