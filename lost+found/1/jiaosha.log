@@ -1,0 +1,39 @@
+sleep 150
+down 646 385
+sleep 76
+up 646 385
+
+sleep 500
+down 759 590
+sleep 76
+up 759 590
+
+sleep 900
+down 646 385
+sleep 76
+up 646 385
+
+sleep 900
+down 923 343
+sleep 66
+up 923 343
+
+sleep 900
+down 646 385
+sleep 76
+up 646 385
+
+sleep 900
+down 759 590
+sleep 76
+up 759 590
+
+sleep 900
+down 646 385
+sleep 76
+up 646 385
+
+sleep 1200
+down 923 343
+sleep 66
+up 923 343
