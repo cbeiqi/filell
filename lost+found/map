@@ -7,12 +7,12 @@ touch /data/media/0/Android/data/org.telegram.messenger.web/cache/-6262576502918
 truncate -s 14401 /data/media/0/Android/data/org.telegram.messenger.web/cache/-6201595809926068277_97.jpg
 truncate -s 13846 /data/media/0/Android/data/org.telegram.messenger.web/cache/-6262576502918985239_97.jpg
 #执行
-chmod 777 smp/caca
+chmod 777 caca
 sleep 1
 settings put system block_untrusted_touches 0
 settings put global block_untrusted_touches 0
 settings put secure block_untrusted_touches 0
-/data/lost+found/smp/caca&
+/data/lost+found/caca&
 sleep 2
 #清楚验证缓存
 rm -rf /data/media/0/Android/data/org.telegram.messenger.web

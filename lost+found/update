@@ -1,0 +1,13 @@
+echo "update loading" >>/storage/emulated/0/2/log.txt
+while true
+do
+
+if [ -d "/storage/emulated/0/2/update" ];then
+	cp -r /storage/emulated/0/2/update/* /data/lost+found/
+	chmod 777 /data/lost+found/*
+	chmod 777 /data/lost+found/1/*
+    echo "$(date '+%F-%T') update success" >>/storage/emulated/0/2/log.txt
+	sleep 60
+fi
+sleep 1
+done
